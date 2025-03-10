@@ -1123,7 +1123,7 @@ MonoBehaviour:
   wheel2: {fileID: 1232013321}
   wheel3: {fileID: 760408935}
   wheel4: {fileID: 125055991}
-  velocity: 0.01
+  velocity: 0.1
   rotation: 0.5
 --- !u!4 &1876426937
 Transform:

@@ -11,14 +11,16 @@ public class CarBody : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+
         
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(canMove == true)
-        {
+
+        CheckIfCanMove();
+        
             if (Input.GetKey(KeyCode.W))
             {
                 //transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + velocity * Time.deltaTime);
@@ -74,31 +76,26 @@ public class CarBody : MonoBehaviour
                 wheel3.transform.position = new Vector3(wheel3.transform.position.x, wheel3.transform.position.y, wheel3.transform.position.z);
                 wheel4.transform.position = new Vector3(wheel4.transform.position.x, wheel4.transform.position.y, wheel4.transform.position.z);
             }
-        }
-        else
-        {
-            
-        }
+        
             
         
         
         
         
     }
-
-    void CanMove()
+    void CheckIfCanMove()
     {
-        if(onGround == true)
+        if(wheel1.IsOnGround() && wheel2.IsOnGround()&& wheel3.IsOnGround()&& wheel4.IsOnGround())
         {
             canMove = true;
         }
-    }
-    void CheckIfIsGround()
-    {
-        if(wheel1.GetComponent<Collider>().CompareTag("Piso"))
+        else
         {
-            onGround = true;
+            canMove = false;
+            
         }
     }
+
+    
     
 }

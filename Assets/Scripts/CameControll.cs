@@ -13,6 +13,6 @@ public class CameControll : MonoBehaviour
     void Update()
     {
         transform.position = new Vector3(car.transform.position.x, car.transform.position.y + 0.5f, car.transform.position.z - 5);
-        transform.rotation = new Quaternion(car.transform.rotation.x, car.transform.rotation.y, car.transform.rotation.z, car.transform.rotation.w);
+        //transform.rotation = new Quaternion(car.transform.rotation.x, car.transform.rotation.y, car.transform.rotation.z, car.transform.rotation.w);
     }
 }

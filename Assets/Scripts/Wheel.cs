@@ -3,7 +3,7 @@ using UnityEngine;
 public class Wheel : MonoBehaviour
 {
     
-    
+    private bool onGround;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -15,20 +15,24 @@ public class Wheel : MonoBehaviour
     {
         
     }
-    /*void OnCollisionEnter(Collision collision)
+    void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Piso"))
         {
-            onGorund = true;
+            onGround = true;
         }
     }
     void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Ground"))
+        if (collision.gameObject.CompareTag("Piso"))
         {
             onGround = false;
         }
             
-    }*/
+    }
+    public bool IsOnGround()
+    {
+        return onGround;
+    }
     
 }

@@ -435,10 +435,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d22a9fb25af26c44dad0d1b65dc98107, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wheel1: {fileID: 334283435}
-  wheel2: {fileID: 886869400}
-  wheel3: {fileID: 1644834361}
-  wheel4: {fileID: 1296926285}
+  wheelsColliders:
+  - {fileID: 334283435}
+  - {fileID: 886869400}
+  - {fileID: 1644834361}
+  - {fileID: 1296926285}
   wheelMesh1: {fileID: 79320929}
   wheelMesh2: {fileID: 635750991}
   wheelMesh3: {fileID: 1909648877}
@@ -1835,10 +1836,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d22a9fb25af26c44dad0d1b65dc98107, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wheel1: {fileID: 1713208372}
-  wheel2: {fileID: 1232013321}
-  wheel3: {fileID: 760408935}
-  wheel4: {fileID: 125055991}
+  wheelsColliders: []
   wheelMesh1: {fileID: 0}
   wheelMesh2: {fileID: 0}
   wheelMesh3: {fileID: 0}

@@ -8,11 +8,14 @@ public class CarBody : MonoBehaviour
     public CarBody Auto;
     public bool onGround;
     public bool canMove;
+    private Vector3 initialPos;
+    private Quaternion initialRot;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
 
-        
+        initialPos = transform.position;
+        initialRot = transform.rotation;
     }
 
     // Update is called once per frame
@@ -76,12 +79,18 @@ public class CarBody : MonoBehaviour
                 wheel3.transform.position = new Vector3(wheel3.transform.position.x, wheel3.transform.position.y, wheel3.transform.position.z);
                 wheel4.transform.position = new Vector3(wheel4.transform.position.x, wheel4.transform.position.y, wheel4.transform.position.z);
             }
-        
-            
-        
-        
-        
-        
+        if (Input.GetKey(KeyCode.F))
+        {
+            transform.position = initialPos;
+            transform.rotation = initialRot;
+        }
+
+
+
+
+
+
+
     }
     void CheckIfCanMove()
     {

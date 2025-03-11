@@ -15,16 +15,16 @@ public class Wheel : MonoBehaviour
     {
         
     }
-    void OnCollisionEnter(Collision collision)
+    void OnCollisionEnter()
     {
-        if (collision.gameObject.CompareTag("Piso"))
+        if (CompareTag("Piso"))
         {
             onGround = true;
         }
     }
-    void OnCollisionExit(Collision collision)
+    void OnCollisionExit()
     {
-        if (collision.gameObject.CompareTag("Piso"))
+        if (CompareTag("Piso"))
         {
             onGround = false;
         }

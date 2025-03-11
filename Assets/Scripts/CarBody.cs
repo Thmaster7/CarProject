@@ -3,10 +3,16 @@ using System.Collections.Generic;
 
 public class CarBody : MonoBehaviour
 {
-    [SerializeField] List<Wheel> wheelsColliders;
-    public Wheel wheelMesh1, wheelMesh2, wheelMesh3, wheelMesh4;
-    private float velocity = 20f;
+    public List<WheelCollider> wheelsColliders;
+    public int wheelsOnGround;
+    public List<Wheel> wheelMeshes;
+    public float velocity = 20f;
     private float rotation = 50f;
+    public float acceleration = 0.01f;
+    private float deceleration = 0.001f;
+    private float maxSpeed = 100f;
+    private float minSpeed = 0f;
+    
     public CarBody Auto;
     
     public bool canMove;
@@ -21,122 +27,154 @@ public class CarBody : MonoBehaviour
         initialPos = transform.position;
         initialRot = transform.rotation;
         
+
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        
         CheckIfCanMove();
-        
+        if (canMove == true)
+        {
+            Move();
+        }
 
+        if (Input.GetKey(KeyCode.W))
+        {
 
-
-
-
-            if (Input.GetKey(KeyCode.W))
-            {
+            velocity = Mathf.Lerp(velocity, maxSpeed, acceleration * Time.deltaTime);
+            acceleration++;
             
-            foreach (var wheel in wheelsColliders)
-            {
-                wheel.transform.position = wheel.transform.position;
-            }
-            transform.position += transform.forward * velocity * Time.deltaTime;
+        }
+        else
+        {
+            velocity -= (velocity / maxSpeed) * deceleration * Time.deltaTime;
+            velocity = Mathf.Max(velocity, minSpeed);
             
-            }
-            if (Input.GetKey(KeyCode.S))
-            {
-            foreach (var wheel in wheelsColliders)
-            {
-                wheel.transform.position = wheel.transform.position;
-            }
-            transform.position -= transform.forward * velocity * Time.deltaTime;
-            }
-            if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.W))
-            {
-            
-            transform.Rotate(Vector3.down * rotation * Time.deltaTime);
+            acceleration = 0.00001f;
+        }
 
-            foreach (var wheel in wheelsColliders)
-            {
-                wheel.transform.position = wheel.transform.position;
-            }
-            wheelMesh1.transform.Rotate(Vector3.down * rotation * Time.deltaTime);
-                wheelMesh2.transform.Rotate(Vector3.down * rotation * Time.deltaTime);
-            }
-            if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.W))
-            {
-            
-            transform.Rotate(Vector3.up * rotation * Time.deltaTime);
 
-            foreach (var wheel in wheelsColliders)
-            {
-                wheel.transform.position = wheel.transform.position;
-            }
-            wheelMesh1.transform.Rotate(Vector3.up * rotation * Time.deltaTime);
-                wheelMesh2.transform.Rotate(Vector3.up * rotation * Time.deltaTime);
 
-            }
-            if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.S))
+
+            wheelsOnGround = 0;
+
+        foreach (WheelCollider wheel in wheelsColliders)
+        {
+            if (wheel.isGrounded)
             {
-                
-                transform.Rotate(Vector3.up * rotation * Time.deltaTime);
-            foreach (var wheel in wheelsColliders)
-            {
-                wheel.transform.position = wheel.transform.position;
+                wheelsOnGround++;
             }
         }
-            if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.S))
-            {
-                
-                transform.Rotate(Vector3.down * rotation * Time.deltaTime);
-            foreach (var wheel in wheelsColliders)
-            {
-                wheel.transform.position = wheel.transform.position;
-            }
+        if (Input.GetKey(KeyCode.F))
+        {
+            transform.position = initialPos;
+            transform.rotation = initialRot;
         }
-            if (Input.GetKey(KeyCode.F))
-            {
-                transform.position = initialPos;
-                transform.rotation = initialRot;
-            }
-            if (Input.GetKey(KeyCode.LeftShift))
-            {
-                rotation = 200f;
-                velocity = 15f;
-            }
-            else
-            {
-                rotation = 50f;
-                velocity = 20f;
-            }
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                transform.position = new Vector3(transform.position.x, transform.position.y * forceJump * Time.deltaTime, transform.position.z);
-            }
-        
-        
-
-
-
-
 
 
 
     }
     void CheckIfCanMove()
     {
-        /*if(wheel1.GetComponent<WheelCollider>(isGrounded)|| wheel2.IsOnGround()|| wheel3.IsOnGround()|| wheel4.IsOnGround())
+        if(wheelsOnGround > 0)
         {
             canMove = true;
         }
         else
         {
             canMove = false;
-            
-        }*/
+        }
+        
     }
+    void Move()
+    {
+        if (Input.GetKey(KeyCode.W))
+        {
+            transform.position += transform.forward * velocity * Time.deltaTime;
+            
 
+            foreach (var wheel in wheelsColliders)
+            {
+                wheel.transform.position = wheel.transform.position;
+            }
+            
+
+        }
+        else
+        {
+            velocity = 20f;
+        }
+        if (Input.GetKey(KeyCode.S))
+        {
+            foreach (var wheel in wheelsColliders)
+            {
+                wheel.transform.position = wheel.transform.position;
+            }
+            transform.position -= transform.forward * velocity * Time.deltaTime;
+        }
+        if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.W))
+        {
+
+            transform.Rotate(Vector3.down * rotation * Time.deltaTime);
+
+            foreach (var wheel in wheelsColliders)
+            {
+                wheel.transform.position = wheel.transform.position;
+            }
+            wheelMeshes[0].transform.Rotate(Vector3.down * rotation * Time.deltaTime);
+            wheelMeshes[1].transform.Rotate(Vector3.down * rotation * Time.deltaTime);
+        }
+        if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.W))
+        {
+
+            transform.Rotate(Vector3.up * rotation * Time.deltaTime);
+
+            foreach (var wheel in wheelsColliders)
+            {
+                wheel.transform.position = wheel.transform.position;
+            }
+            wheelMeshes[0].transform.Rotate(Vector3.up * rotation * Time.deltaTime);
+            wheelMeshes[1].transform.Rotate(Vector3.up * rotation * Time.deltaTime);
+
+        }
+        if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.S))
+        {
+
+            transform.Rotate(Vector3.up * rotation * Time.deltaTime);
+            foreach (var wheel in wheelsColliders)
+            {
+                wheel.transform.position = wheel.transform.position;
+            }
+        }
+        if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.S))
+        {
+
+            transform.Rotate(Vector3.down * rotation * Time.deltaTime);
+            foreach (var wheel in wheelsColliders)
+            {
+                wheel.transform.position = wheel.transform.position;
+            }
+        }
+
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            rotation = 200f;
+            velocity = 15f;
+            acceleration = 0f;
+        }
+        else
+        {
+            rotation = 50f;
+            velocity = 20f;
+            
+        }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y * forceJump * Time.deltaTime, transform.position.z);
+        }
+    }
     
     
 }

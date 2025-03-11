@@ -436,14 +436,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wheelsColliders:
-  - {fileID: 334283435}
-  - {fileID: 886869400}
-  - {fileID: 1644834361}
-  - {fileID: 1296926285}
-  wheelMesh1: {fileID: 79320929}
-  wheelMesh2: {fileID: 635750991}
-  wheelMesh3: {fileID: 1909648877}
-  wheelMesh4: {fileID: 1115169962}
+  - {fileID: 334283434}
+  - {fileID: 886869399}
+  - {fileID: 1644834360}
+  - {fileID: 1296926286}
+  wheelsOnGround: 0
+  wheelMeshes:
+  - {fileID: 79320929}
+  - {fileID: 635750991}
+  - {fileID: 1909648877}
+  - {fileID: 1115169962}
+  velocity: 0
+  acceleration: 0.01
   Auto: {fileID: 318292804}
   canMove: 0
 --- !u!1 &330585543
@@ -558,6 +562,11 @@ MonoBehaviour:
 --- !u!1 &334283432 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 460083236159403640, guid: 133308cdb8794744caaef026bde9e1f0, type: 3}
+  m_PrefabInstance: {fileID: 1272912088}
+  m_PrefabAsset: {fileID: 0}
+--- !u!146 &334283434 stripped
+WheelCollider:
+  m_CorrespondingSourceObject: {fileID: 2716459193614891142, guid: 133308cdb8794744caaef026bde9e1f0, type: 3}
   m_PrefabInstance: {fileID: 1272912088}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &334283435
@@ -1022,6 +1031,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3220844048195430644, guid: 133308cdb8794744caaef026bde9e1f0, type: 3}
   m_PrefabInstance: {fileID: 1272912088}
   m_PrefabAsset: {fileID: 0}
+--- !u!146 &886869399 stripped
+WheelCollider:
+  m_CorrespondingSourceObject: {fileID: 4795950753765878369, guid: 133308cdb8794744caaef026bde9e1f0, type: 3}
+  m_PrefabInstance: {fileID: 1272912088}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &886869400
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1404,6 +1418,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d53d27cbb0731d542a5a29bc072d36de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!146 &1296926286 stripped
+WheelCollider:
+  m_CorrespondingSourceObject: {fileID: 1057494946909100755, guid: 133308cdb8794744caaef026bde9e1f0, type: 3}
+  m_PrefabInstance: {fileID: 1272912088}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1437347906
 GameObject:
   m_ObjectHideFlags: 0
@@ -1551,6 +1570,11 @@ Transform:
 --- !u!1 &1644834358 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3962000127133956386, guid: 133308cdb8794744caaef026bde9e1f0, type: 3}
+  m_PrefabInstance: {fileID: 1272912088}
+  m_PrefabAsset: {fileID: 0}
+--- !u!146 &1644834360 stripped
+WheelCollider:
+  m_CorrespondingSourceObject: {fileID: 3145262460232535540, guid: 133308cdb8794744caaef026bde9e1f0, type: 3}
   m_PrefabInstance: {fileID: 1272912088}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &1644834361
@@ -1837,10 +1861,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wheelsColliders: []
-  wheelMesh1: {fileID: 0}
-  wheelMesh2: {fileID: 0}
-  wheelMesh3: {fileID: 0}
-  wheelMesh4: {fileID: 0}
+  wheelsOnGround: 0
+  wheelMeshes: []
+  velocity: 20
+  acceleration: 0.01
   Auto: {fileID: 1876426936}
   canMove: 0
 --- !u!4 &1876426937

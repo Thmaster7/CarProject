@@ -20,8 +20,7 @@ public class CameControll : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        //transform.position = new Vector3(car.transform.position.x, car.transform.position.y + 0.5f, car.transform.position.z - 5);
-        //transform.rotation = new Quaternion(car.transform.rotation.x, car.transform.rotation.y, car.transform.rotation.z, car.transform.rotation.w);
+        
         Vector3 desiredPosition = car.transform.position + car.transform.TransformDirection(offset);
         transform.position = Vector3.SmoothDamp(transform.position, desiredPosition, ref velocity, smoothSpeed);
         Quaternion carRotation = Quaternion.LookRotation(car.transform.position - transform.position);

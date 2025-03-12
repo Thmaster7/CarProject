@@ -8,10 +8,10 @@ public class CarBody : MonoBehaviour
     public List<Wheel> wheelMeshes;
     public float velocity = 20f;
     private float rotation = 50f;
-    public float acceleration = 0.01f;
-    private float deceleration = 0.001f;
-    private float maxSpeed = 100f;
-    private float minSpeed = 0f;
+    public float acceleration;
+    private float deceleration = 5f;
+    private float maxSpeed = 50f;
+    private float minSpeed = 10f;
     
     public CarBody Auto;
     
@@ -40,20 +40,7 @@ public class CarBody : MonoBehaviour
             Move();
         }
 
-        if (Input.GetKey(KeyCode.W))
-        {
-
-            velocity = Mathf.Lerp(velocity, maxSpeed, acceleration * Time.deltaTime);
-            acceleration++;
-            
-        }
-        else
-        {
-            velocity -= (velocity / maxSpeed) * deceleration * Time.deltaTime;
-            velocity = Mathf.Max(velocity, minSpeed);
-            
-            acceleration = 0.00001f;
-        }
+        
 
 
 
@@ -85,6 +72,7 @@ public class CarBody : MonoBehaviour
         else
         {
             canMove = false;
+            transform.position += transform.forward * velocity /4 * Time.deltaTime;
         }
         
     }
@@ -93,7 +81,8 @@ public class CarBody : MonoBehaviour
         if (Input.GetKey(KeyCode.W))
         {
             transform.position += transform.forward * velocity * Time.deltaTime;
-            
+            velocity = Mathf.Lerp(velocity, maxSpeed, acceleration * Time.deltaTime);
+            acceleration = 0.1f;
 
             foreach (var wheel in wheelsColliders)
             {
@@ -104,7 +93,10 @@ public class CarBody : MonoBehaviour
         }
         else
         {
-            velocity = 20f;
+            velocity -= deceleration * Time.deltaTime;
+            velocity = Mathf.Max(velocity, minSpeed);
+
+            acceleration = 0;
         }
         if (Input.GetKey(KeyCode.S))
         {
@@ -160,14 +152,15 @@ public class CarBody : MonoBehaviour
 
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            rotation = 200f;
-            velocity = 15f;
+            rotation = 100f;
+            velocity -= deceleration * Time.deltaTime;
+            
             acceleration = 0f;
         }
         else
         {
             rotation = 50f;
-            velocity = 20f;
+            
             
         }
         if (Input.GetKeyDown(KeyCode.Space))

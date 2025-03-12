@@ -3,13 +3,15 @@ using UnityEngine;
 public class CameControll : MonoBehaviour
 {
     public CarBody car;
-    public float rotationSmoothSpeed = 2.5f;
+    
+    public float rotationSmoothSpeed = 5f;
+    public float positionSmoothSpeed = 5f;
     private Vector3 velocity = Vector3.zero;
     public Vector3 offset = new Vector3(0, 1, -5);
     public float smoothSpeed = 0.125f;
     private bool isOriginalPosition;
     private Vector3 originalOffset;
-    private Vector3 modifiedOffset = new Vector3(1, 2, -1);
+    private Vector3 reverseOffset = new Vector3(0, 5, -7);
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -18,36 +20,15 @@ public class CameControll : MonoBehaviour
     }
 
     // Update is called once per frame
-    void LateUpdate()
+    void Update()
     {
         
         Vector3 desiredPosition = car.transform.position + car.transform.TransformDirection(offset);
-        transform.position = Vector3.SmoothDamp(transform.position, desiredPosition, ref velocity, smoothSpeed);
+        transform.position = Vector3.Lerp(transform.position, desiredPosition, positionSmoothSpeed * Time.deltaTime);
         Quaternion carRotation = Quaternion.LookRotation(car.transform.position - transform.position);
         transform.rotation = Quaternion.Slerp(transform.rotation, carRotation, rotationSmoothSpeed * Time.deltaTime);
-        if (Input.GetKey(KeyCode.C))
-        {
-            if (isOriginalPosition)
-            {
-                offset = modifiedOffset;
 
-            }
-            else if (!isOriginalPosition)
-            {
-                offset = originalOffset;
-
-            }
-            isOriginalPosition = !isOriginalPosition;
-
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            offset = new Vector3(0, 5, -7);
-        }
-        else
-        {
-            offset = originalOffset;
-        }
+        Vector3 currentOffset = Input.GetKey(KeyCode.S) ? reverseOffset : offset;
 
     }
     

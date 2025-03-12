@@ -7,13 +7,13 @@ public class CarBody : MonoBehaviour
     public List<WheelCollider> wheelsColliders;
     public int wheelsOnGround;
     public List<Wheel> wheelMeshes;
-    public float velocity = 20f;
-    private float rotation = 5f;
+    public float velocity = 3000f;
+    private float rotation = 50f;
     public float acceleration;
-    private float deceleration = 5f;
-    private float maxSpeed = 50f;
-    private float minSpeed = 10f;
-    private float iners;
+    private float deceleration = 10f;
+    private float maxSpeed = 20f;
+    private float minSpeed = 0.1f;
+   
 
     
 
@@ -29,12 +29,14 @@ public class CarBody : MonoBehaviour
 
         initialPos = transform.position;
         initialRot = transform.rotation;
-        
+        rb.centerOfMass = new Vector3(0, -0.5f, 0);
+
+
 
     }
     void Update()
     {
-        iners = velocity;
+        
         
         CheckIfCanMove();
         if (canMove == true)
@@ -75,13 +77,16 @@ public class CarBody : MonoBehaviour
 
     void Move()
     {
-        if (Input.GetKey(KeyCode.W))
+        if (Input.GetKey(KeyCode.W) && rb.linearVelocity.magnitude < maxSpeed)
         {
+            rb.AddForce(transform.forward * velocity * Time.deltaTime, ForceMode.Acceleration);
 
+            velocity = 3000f;
+            acceleration = 10f;
             //transform.position += transform.forward * velocity * Time.deltaTime;
-            rb.linearVelocity += transform.forward * velocity * Time.deltaTime;
+
             velocity = Mathf.Lerp(velocity, maxSpeed, acceleration * Time.deltaTime);
-            acceleration = 0.001f;
+
             foreach (var wheel in wheelsColliders)
             {
                 wheel.transform.position = wheel.transform.position;
@@ -93,17 +98,21 @@ public class CarBody : MonoBehaviour
             velocity = Mathf.Max(velocity, minSpeed);
             acceleration = 0;
         }
-        if (Input.GetKey(KeyCode.S))
+        if (Input.GetKey(KeyCode.S) && rb.linearVelocity.magnitude < maxSpeed / 2)
         {
             //transform.position -= transform.forward * velocity * Time.deltaTime;
-            rb.linearVelocity -= transform.forward * velocity * Time.deltaTime;
+            rb.AddForce(-transform.forward * (velocity / 2) * Time.deltaTime, ForceMode.Acceleration);
             foreach (var wheel in wheelsColliders)
             {
                 wheel.transform.position = wheel.transform.position;
             }
             
         }
-        if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.W))
+        if (!Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.S))
+        {
+            rb.linearVelocity = Vector3.Lerp(rb.linearVelocity, Vector3.zero, deceleration * Time.deltaTime);
+        }
+        if (Input.GetKey(KeyCode.A))
         {
             transform.Rotate(Vector3.down * rotation * Time.deltaTime);
             foreach (var wheel in wheelsColliders)
@@ -113,7 +122,7 @@ public class CarBody : MonoBehaviour
             wheelMeshes[0].transform.Rotate(Vector3.down * rotation * Time.deltaTime);
             wheelMeshes[1].transform.Rotate(Vector3.down * rotation * Time.deltaTime);
         }
-        if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.W))
+        if (Input.GetKey(KeyCode.D))
         {
             transform.Rotate(Vector3.up * rotation * Time.deltaTime);
             foreach (var wheel in wheelsColliders)
@@ -123,7 +132,7 @@ public class CarBody : MonoBehaviour
             wheelMeshes[0].transform.Rotate(Vector3.up * rotation * Time.deltaTime);
             wheelMeshes[1].transform.Rotate(Vector3.up * rotation * Time.deltaTime);
         }
-        if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.S))
+        /*if (Input.GetKey(KeyCode.A))
         {
             transform.Rotate(Vector3.up * rotation * Time.deltaTime);
             foreach (var wheel in wheelsColliders)
@@ -131,7 +140,7 @@ public class CarBody : MonoBehaviour
                 wheel.transform.position = wheel.transform.position;
             }
         }
-        if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.S))
+        if (Input.GetKey(KeyCode.D))
         {
             transform.Rotate(Vector3.down * rotation * Time.deltaTime);
             foreach (var wheel in wheelsColliders)
@@ -142,18 +151,18 @@ public class CarBody : MonoBehaviour
 
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            rotation = 50f;
+            rotation = 100f;
             velocity -= deceleration * Time.deltaTime;
             velocity = Mathf.Max(velocity, minSpeed);
             acceleration = 0f;
         }
         else
         {
-            rotation = 25f;
-        }
+            rotation = 50f;
+        }*/
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            transform.position = new Vector3(transform.position.x, transform.position.y * forceJump * Time.deltaTime, transform.position.z);
+            rb.AddForce(Vector3.up * forceJump, ForceMode.Impulse);
         }
     }
 }

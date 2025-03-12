@@ -11,7 +11,7 @@ public class CarBody : MonoBehaviour
     private float rotation = 50f;
     public float acceleration;
     private float deceleration = 10f;
-    private float maxSpeed = 20f;
+    private float maxSpeed = 30f;
     private float minSpeed = 0.1f;
    
 
@@ -34,7 +34,7 @@ public class CarBody : MonoBehaviour
 
 
     }
-    void Update()
+    void FixedUpdate()
     {
         
         
@@ -79,14 +79,11 @@ public class CarBody : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.W) && rb.linearVelocity.magnitude < maxSpeed)
         {
+            //transform.position += transform.forward * velocity * Time.deltaTime;
+            velocity = Mathf.Lerp(velocity, maxSpeed, acceleration * Time.deltaTime);
             rb.AddForce(transform.forward * velocity * Time.deltaTime, ForceMode.Acceleration);
-
             velocity = 3000f;
             acceleration = 10f;
-            //transform.position += transform.forward * velocity * Time.deltaTime;
-
-            velocity = Mathf.Lerp(velocity, maxSpeed, acceleration * Time.deltaTime);
-
             foreach (var wheel in wheelsColliders)
             {
                 wheel.transform.position = wheel.transform.position;
@@ -94,9 +91,9 @@ public class CarBody : MonoBehaviour
         }
         else
         {
-            velocity = Mathf.Lerp(velocity, minSpeed, deceleration * Time.deltaTime);
+            //velocity = Mathf.Lerp(velocity, minSpeed, deceleration * Time.deltaTime);
             velocity = Mathf.Max(velocity, minSpeed);
-            acceleration = 0;
+            
         }
         if (Input.GetKey(KeyCode.S) && rb.linearVelocity.magnitude < maxSpeed / 2)
         {
@@ -147,7 +144,7 @@ public class CarBody : MonoBehaviour
             {
                 wheel.transform.position = wheel.transform.position;
             }
-        }
+        }*/
 
         if (Input.GetKey(KeyCode.LeftShift))
         {
@@ -158,8 +155,9 @@ public class CarBody : MonoBehaviour
         }
         else
         {
-            rotation = 50f;
-        }*/
+            rotation = 50f; 
+            acceleration = 10f;
+        }
         if (Input.GetKeyDown(KeyCode.Space))
         {
             rb.AddForce(Vector3.up * forceJump, ForceMode.Impulse);

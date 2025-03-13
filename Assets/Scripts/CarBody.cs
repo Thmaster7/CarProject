@@ -11,7 +11,7 @@ public class CarBody : MonoBehaviour
     private float rotation = 40f;
     public float acceleration;
     private float deceleration = 10f;
-    private float maxSpeed = 30f;
+    public float maxSpeed = 30f;
     private float minSpeed = 0.1f;
     private Quaternion currentRotation;
    
@@ -83,6 +83,7 @@ public class CarBody : MonoBehaviour
             //transform.position += transform.forward * velocity * Time.deltaTime;
             velocity = Mathf.Lerp(velocity, maxSpeed, acceleration * Time.deltaTime);
             rb.AddForce(transform.forward * velocity * Time.deltaTime, ForceMode.Acceleration);
+            
             velocity = 3000f;
             acceleration = 10f;
             currentRotation = transform.rotation;
@@ -95,6 +96,7 @@ public class CarBody : MonoBehaviour
         {
             velocity = Mathf.Lerp(velocity, minSpeed, deceleration * Time.deltaTime);
             velocity = Mathf.Max(velocity, minSpeed);
+            
             
         }
         if (Input.GetKey(KeyCode.S) && rb.linearVelocity.magnitude < maxSpeed / 2)
@@ -117,7 +119,7 @@ public class CarBody : MonoBehaviour
         {
             
             transform.Rotate(Vector3.down * rotation * Time.deltaTime);
-
+            
             foreach (var wheel in wheelsColliders)
             {
                 wheel.transform.position = wheel.transform.position;
@@ -129,6 +131,7 @@ public class CarBody : MonoBehaviour
         {
             
             transform.Rotate(Vector3.up * rotation * Time.deltaTime);
+            
 
             foreach (var wheel in wheelsColliders)
             {

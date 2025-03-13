@@ -156,8 +156,8 @@ public class CarBody : MonoBehaviour
             {
                 wheel.transform.position = wheel.transform.position;
             }
-            wheelMeshes[0].transform.localRotation = Quaternion.Euler(0, wheelRotation, 0);
-            wheelMeshes[1].transform.localRotation = Quaternion.Euler(0, wheelRotation, 0);
+            wheelMeshes[0].transform.localRotation = Quaternion.Euler(transform.rotation.x * 150000f, wheelRotation, 0);
+            wheelMeshes[1].transform.localRotation = Quaternion.Euler(transform.rotation.x * 150000f, wheelRotation, 0);
         }
         if (Input.GetKey(KeyCode.D)&& Input.GetKey(KeyCode.W))
         {
@@ -175,10 +175,10 @@ public class CarBody : MonoBehaviour
             {
                 wheel.transform.position = wheel.transform.position;
             }
-            wheelMeshes[0].transform.localRotation = Quaternion.Euler(0, wheelRotation, 0);
-            wheelMeshes[1].transform.localRotation = Quaternion.Euler(0, wheelRotation, 0);
-            
-            
+            wheelMeshes[0].transform.localRotation = Quaternion.Euler(transform.rotation.x * 150000f, wheelRotation, 0);
+            wheelMeshes[1].transform.localRotation = Quaternion.Euler(transform.rotation.x * 150000f, wheelRotation, 0);
+
+
         }
         
         if (Input.GetKey(KeyCode.A)&& Input.GetKey(KeyCode.S))
@@ -189,15 +189,15 @@ public class CarBody : MonoBehaviour
             {
 
 
-                wheel.transform.Rotate(Vector3.right * 500f);
+                wheel.transform.Rotate(Vector3.left * 500f);
 
             }
             foreach (var wheel in wheelsColliders)
             {
                 wheel.transform.position = wheel.transform.position;
             }
-            wheelMeshes[0].transform.localRotation = Quaternion.Euler(0, wheelRotation, 0);
-            wheelMeshes[1].transform.localRotation = Quaternion.Euler(0, wheelRotation, 0);
+            wheelMeshes[0].transform.localRotation = Quaternion.Euler(transform.rotation.x * -150000f, wheelRotation, 0);
+            wheelMeshes[1].transform.localRotation = Quaternion.Euler(transform.rotation.x * -150000f, wheelRotation, 0);
         }
         if (Input.GetKey(KeyCode.D)&& Input.GetKey(KeyCode.S))
         {
@@ -207,15 +207,15 @@ public class CarBody : MonoBehaviour
             {
 
 
-                wheel.transform.Rotate(Vector3.right * 500f);
+                wheel.transform.Rotate(Vector3.left * 500f);
 
             }
             foreach (var wheel in wheelsColliders)
             {
                 wheel.transform.position = wheel.transform.position;
             }
-            wheelMeshes[0].transform.localRotation = Quaternion.Euler(0, wheelRotation, 0);
-            wheelMeshes[1].transform.localRotation = Quaternion.Euler(0, wheelRotation, 0);
+            wheelMeshes[0].transform.localRotation = Quaternion.Euler(transform.rotation.x * -150000f, wheelRotation, 0);
+            wheelMeshes[1].transform.localRotation = Quaternion.Euler(transform.rotation.x * -150000f, wheelRotation, 0);
         }
         if (!Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
         {

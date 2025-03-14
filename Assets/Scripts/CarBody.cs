@@ -14,7 +14,7 @@ public class CarBody : MonoBehaviour
     public float maxSpeed = 30f;
     private float minSpeed = 0.1f;
     private Quaternion currentRotation;
-    private float maxRotation = 30f;
+    private float maxRotation = 20f;
     private float wheelRotation;
     private Quaternion currentWheelRotation;
    
@@ -137,7 +137,8 @@ public class CarBody : MonoBehaviour
         }
         if (!Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.S))
         {
-            rb.linearVelocity = Vector3.Lerp(rb.linearVelocity, Vector3.zero, deceleration * Time.deltaTime);
+           
+            rb.AddForce(-transform.forward * (velocity / 2) * Time.deltaTime, ForceMode.Acceleration);
         }
         if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.W))
         {

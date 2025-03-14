@@ -137,8 +137,9 @@ public class CarBody : MonoBehaviour
         }
         if (!Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.S))
         {
-           
             rb.AddForce(-transform.forward * (velocity / 2) * Time.deltaTime, ForceMode.Acceleration);
+            
+            
         }
         if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.W))
         {
